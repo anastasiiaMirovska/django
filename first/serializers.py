@@ -25,4 +25,4 @@ from rest_framework import serializers
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarModel
-        fields = ("id", "barnd", "price", "year", "created_at", "updated_at")
+        fields = ("id", "brand", "price", "year", "created_at", "updated_at")
