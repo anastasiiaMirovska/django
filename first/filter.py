@@ -2,6 +2,7 @@ from django.db.models import QuerySet
 from django.http import QueryDict
 from rest_framework.exceptions import ValidationError
 from first.models import CarModel
+from first.serializers import CarSerializer
 
 
 def car_filter(query: QueryDict) -> QuerySet:
@@ -38,20 +39,25 @@ def car_filter(query: QueryDict) -> QuerySet:
             case "brand_contains":
                 qs = qs.filter(brand__icontains=v)
 
-            case "asc_brand":
-                qs = qs.order_by("brand")
-            case "asc_brand":
-                qs = qs.order_by("-brand")
-            case "asc_year":
-                qs = qs.order_by("year")
-            case "desc_year":
-                qs = qs.order_by("-year")
-            case "asc_price":
-                qs = qs.order_by("price")
-            case "desc_price":
-                qs = qs.order_by("-price")
+            # case "asc_brand":
+            #     qs = qs.order_by("brand")
+            # case "asc_brand":
+            #     qs = qs.order_by("-brand")
+            # case "asc_year":
+            #     qs = qs.order_by("year")
+            # case "desc_year":
+            #     qs = qs.order_by("-year")
+            # case "asc_price":
+            #     qs = qs.order_by("price")
+            # case "desc_price":
+            #     qs = qs.order_by("-price")
 
-
+            case "order":
+                fields = CarSerializer.Meta.fields
+                fields = [*fields, *[f'-{field}' for field in fields]]
+                if v not in fields:
+                    raise ValidationError({"details": f"Please choise from {", ".join(fields)})"})
+                qs = qs.order_by(v)
             case _:
                 raise ValidationError(f"Filter {k} is not supported")
 
