@@ -1,6 +1,4 @@
-from rest_framework import serializers
-
-from first.models import CarModel
+from apps.cars.models import CarModel
 from rest_framework import serializers
 
 

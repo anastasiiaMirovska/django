@@ -16,7 +16,7 @@ Including another URLconf
 """
 
 from django.urls import path
-from first.views import CarListCreateView, CarRetrieveUpdateDeleteView
+from apps.cars.views import CarListCreateView, CarRetrieveUpdateDeleteView
 
 
 urlpatterns = [

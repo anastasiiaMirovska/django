@@ -2,8 +2,8 @@
 # from rest_framework.views import APIView
 # from rest_framework.response import Response
 # from rest_framework import status
-# from first.models import CarModel
-# from first.serializers import CarSerializer
+# from cars.models import CarModel
+# from cars.serializers import CarSerializer
 #
 # class CarListCreateView(APIView):
 #     def get(self, *args, **kwargs): #Користувач отримує дані з апки
@@ -73,8 +73,8 @@
 # from django.db.models import Q
 # from rest_framework.response import Response
 # from rest_framework import status
-# from first.models import CarModel
-# from first.serializers import CarSerializer
+# from cars.models import CarModel
+# from cars.serializers import CarSerializer
 # from rest_framework.generics import GenericAPIView
 #
 #
@@ -162,9 +162,9 @@
 # from rest_framework.response import Response
 # from rest_framework import status
 #
-# from first.filter import car_filter
-# from first.models import CarModel
-# from first.serializers import CarSerializer
+# from cars.filter import car_filter
+# from cars.models import CarModel
+# from cars.serializers import CarSerializer
 # from rest_framework.generics import GenericAPIView
 # from rest_framework.mixins import ListModelMixin, CreateModelMixin, RetrieveModelMixin, UpdateModelMixin, DestroyModelMixin
 
@@ -207,18 +207,11 @@
 #         return super().destroy(request, *args, **kwargs)
 
 
+from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 
-
-
-
-
-from rest_framework.response import Response
-from rest_framework import status
-
-from first.filter import car_filter
-from first.models import CarModel
-from first.serializers import CarSerializer
-from rest_framework.generics import GenericAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
+from apps.cars.filter import car_filter
+from apps.cars.models import CarModel
+from apps.cars.serializers import CarSerializer
 
 
 class CarListCreateView(ListCreateAPIView):
