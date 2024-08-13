@@ -8,4 +8,4 @@ class CarFilter(filters.FilterSet):
     year_range = filters.RangeFilter('year')
     year_in = filters.BaseInFilter('year')
     body = filters.ChoiceFilter('body_type', choices=BodyTypeChoices.choices)
-    order = filters.OrderingFilter(fields=('year','price',('id', 'asd')))
+    order = filters.OrderingFilter(fields=('year', 'price', ('id', 'asd')))
