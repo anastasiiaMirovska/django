@@ -13,7 +13,7 @@ class UserModel(AbstractBaseUser, PermissionsMixin, BaseModel):
 
     email = models.EmailField(unique=True)
     # password = models.CharField(_("password"), max_length=128) # унаслідується від AbstractBaseUser
-    is_active = models.BooleanField(default=True)
+    is_active = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
     USERNAME_FIELD = 'email' # Авторизація тепер проходить не по username, а по email
     objects = UserManager()
