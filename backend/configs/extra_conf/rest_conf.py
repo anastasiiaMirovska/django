@@ -9,6 +9,7 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         'core.permissions.is_super_user_permission.IsSuperUser',
-    ]
+    ],
+    'EXCEPTION_HANDLER': 'core.handlers.error_handlers.error_handler',
 }
 # Зазвичай за дефолний permission прописують найвищий, у нашому випадку це IsSuperUser
