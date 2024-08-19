@@ -17,13 +17,14 @@ UserModel: User = get_user_model()
 
 class ActivateUserView(GenericAPIView):
     permission_classes = (AllowAny,)
+    serializer_class = UserSerializer
 
     def patch(self, *args, **kwargs):
         token = kwargs['token']
         user = JWTService.verify_token(token, ActivateToken)
         user.is_active = True
         user.save()
-        serializer = UserSerializer(user)
+        serializer = self.get_serializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 

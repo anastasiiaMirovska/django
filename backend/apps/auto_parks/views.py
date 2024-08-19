@@ -16,6 +16,7 @@ class AutoParkListCreateView(ListCreateAPIView):
 
 
 class AutoParkAddCarView(GenericAPIView):
+    serializer_class = AutoParkSerializer
     queryset = AutoParkModel.objects.all()
     def post(self, *args, **kwargs):
         auto_park = self.get_object()
@@ -23,5 +24,5 @@ class AutoParkAddCarView(GenericAPIView):
         serializer = CarSerializer(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save(auto_park=auto_park)
-        ap_serializer = AutoParkSerializer(auto_park)
+        ap_serializer = self.get_serializer(auto_park)
         return Response(ap_serializer.data, status.HTTP_201_CREATED)

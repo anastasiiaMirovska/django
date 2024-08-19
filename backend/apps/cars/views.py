@@ -1,9 +1,13 @@
+from django.utils.decorators import method_decorator
+
 from rest_framework import permissions, status
 from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from drf_yasg.utils import swagger_auto_schema
 
 from core.paginations import PagePagination
 from core.permissions.is_super_user_permission import IsSuperUser
@@ -14,7 +18,9 @@ from apps.cars.models import CarModel
 from apps.cars.serializers import CarPhotoSerializer, CarSerializer
 
 
+@method_decorator(name='get', decorator=swagger_auto_schema(security=[], operation_summary='Create new car', operation_id='my custom name'))
 class CarListView(ListAPIView):
+    """Get all cars"""
     serializer_class = CarSerializer
     queryset = CarModel.objects.all()
     filterset_class = CarFilter
@@ -26,6 +32,16 @@ class CarListView(ListAPIView):
 
 
 class CarRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
+    """
+    get:
+        get car details
+    put:
+        update car
+    patch:
+        partial car update
+    delete:
+        delete car
+    """
     serializer_class = CarSerializer
     queryset = CarModel.objects.all()
     permission_classes = (AllowAny,)
@@ -39,6 +55,7 @@ class CarRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
 
 class CarAddPhotoView(UpdateAPIView):
+    """Add car photo"""
     permission_classes = (AllowAny,)
     serializer_class = CarPhotoSerializer
     queryset = CarModel.objects.all()

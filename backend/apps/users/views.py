@@ -18,6 +18,7 @@ class UserListCreateView(ListCreateAPIView):
 
 class UserBlockView(GenericAPIView):
     permission_classes = (IsAdminUser,)
+    serializer_class = UserSerializer
 
     def get_queryset(self):
         return UserModel.objects.exclude(pk=self.request.user.pk)
@@ -29,12 +30,13 @@ class UserBlockView(GenericAPIView):
             user.is_active = False
             user.save()
 
-        serializer = UserSerializer(user)
+        serializer = self.get_serializer(user)
         return Response(serializer.data, status.HTTP_200_OK)
 
 
 class UserUnBlockView(GenericAPIView):
     permission_classes = (IsAdminUser,)
+    serializer_class = UserSerializer
 
     def get_queryset(self):
         return UserModel.objects.exclude(pk=self.request.user.pk)
@@ -46,12 +48,13 @@ class UserUnBlockView(GenericAPIView):
             user.is_active = True
             user.save()
 
-        serializer = UserSerializer(user)
+        serializer = self.get_serializer(user)
         return Response(serializer.data, status.HTTP_200_OK)
 
 
 class UserToAdminView(GenericAPIView):
     permission_classes = (IsAdminUser,)
+    serializer_class = UserSerializer
 
     def get_queryset(self):
         return UserModel.objects.exclude(pk=self.request.user.pk)
@@ -62,6 +65,6 @@ class UserToAdminView(GenericAPIView):
         if not user.is_staff:
             user.is_staff = True
             user.save()
-        serializer = UserSerializer(user)
+        serializer = self.get_serializer(user)
         return Response(serializer.data, status.HTTP_200_OK)
 
