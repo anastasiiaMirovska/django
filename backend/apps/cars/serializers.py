@@ -14,4 +14,4 @@ class CarPhotoSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarModel
         fields = ('photo',)
-        extra_kwargs = {'photo':{'required': True}}
+        extra_kwargs = {'photo': {'required': True}}
