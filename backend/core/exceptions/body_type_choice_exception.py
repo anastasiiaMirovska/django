@@ -1,0 +1,2 @@
+class BodyTypeChoiceException(Exception):
+    pass
