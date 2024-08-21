@@ -47,6 +47,23 @@ class CarRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
     permission_classes = (AllowAny,)
     # permission_classes = (IsAuthenticated,) # Ми хочемо тільки для видалення зробити щоб був аутентифікований, тому перевизначаємо метод
 
+    def put(self, *args, **kwargs):
+        data = self.request.data
+        car_body_type = data['body_type']
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.validate_body_type(car_body_type)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def patch(self, *args, **kwargs):
+        data = self.request.data
+        car_body_type = data['body_type']
+        serializer = self.get_serializer(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.validate_body_type(car_body_type)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+
     def get_permissions(self):
         if self.request.method == 'DELETE':
             return (IsAuthenticated(),)
