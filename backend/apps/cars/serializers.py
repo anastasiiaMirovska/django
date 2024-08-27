@@ -8,7 +8,7 @@ from apps.cars.models import CarModel
 class CarSerializer(serializers.ModelSerializer):
     class Meta:
         model = CarModel
-        fields = ('id', 'brand', 'price', 'year', 'body_type', 'photo', 'created_at', 'updated_at')
+        fields = ('id', 'brand', 'price', 'year', 'body_type', 'created_at', 'updated_at')
 
     def validate_body_type(self, value):
         choices = dict(BodyTypeChoices.choices)
@@ -19,8 +19,8 @@ class CarSerializer(serializers.ModelSerializer):
         return value
 
 
-class CarPhotoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CarModel
-        fields = ('photo',)
-        extra_kwargs = {'photo': {'required': True}}
+# class CarPhotoSerializer(serializers.ModelSerializer):
+#     class Meta:
+#         model = CarModel
+#         fields = ('photo',)
+#         extra_kwargs = {'photo': {'required': True}}

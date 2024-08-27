@@ -1,5 +1,7 @@
+from djangochannelsrestframework.decorators import action
 from djangochannelsrestframework.generics import GenericAsyncAPIConsumer
 from djangochannelsrestframework.observer import model_observer
+from yaml import serialize
 
 from apps.cars.models import CarModel
 from apps.cars.serializers import CarSerializer
@@ -16,7 +18,7 @@ class CarConsumer(GenericAsyncAPIConsumer):
         await self.accept()
         await self.channel_layer.group_add(
             self.room_name,
-            self.channel_name
+            self.channel_name,
         )
 
     @model_observer(CarModel, serializer_class=CarSerializer)
@@ -26,10 +28,7 @@ class CarConsumer(GenericAsyncAPIConsumer):
 
     @action()
     async def subscribe_to_car_activity(self, request_id, **kwargs):
-        self.cars_activity.subscribe(request_id=request_id)
-
-
-
+        await self.cars_activity.subscribe(request_id=request_id)
 
 
 

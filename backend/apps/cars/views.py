@@ -1,7 +1,14 @@
 from django.utils.decorators import method_decorator
 
 from rest_framework import permissions, status
-from rest_framework.generics import GenericAPIView, ListAPIView, RetrieveUpdateDestroyAPIView, UpdateAPIView
+from rest_framework.generics import (
+    GenericAPIView,
+    ListAPIView,
+    ListCreateAPIView,
+    RetrieveAPIView,
+    RetrieveUpdateDestroyAPIView,
+    UpdateAPIView,
+)
 from rest_framework.pagination import PageNumberPagination
 from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
@@ -15,16 +22,18 @@ from core.services.email_service import EmailService
 
 from apps.cars.filter import CarFilter
 from apps.cars.models import CarModel
-from apps.cars.serializers import CarPhotoSerializer, CarSerializer
+from apps.cars.serializers import CarSerializer
 
+# from apps.cars.serializers import CarPhotoSerializer
 
 @method_decorator(name='get', decorator=swagger_auto_schema(security=[], operation_summary='Create new car', operation_id='my custom name'))
-class CarListView(ListAPIView):
+class CarListView(ListCreateAPIView):
     """Get all cars"""
     serializer_class = CarSerializer
     queryset = CarModel.objects.all()
     filterset_class = CarFilter
     permission_classes = (AllowAny,)
+    pagination_class = None
     # permission_classes = (IsSuperUser,)# Оскільки ми поставили дефолтний permission у rest_conf, то нам вже не потрібно нічого тут прописувати
 
     def get_queryset(self):
@@ -71,17 +80,17 @@ class CarRetrieveUpdateDeleteView(RetrieveUpdateDestroyAPIView):
 
 
 
-class CarAddPhotoView(UpdateAPIView):
-    """Add car photo"""
-    permission_classes = (AllowAny,)
-    serializer_class = CarPhotoSerializer
-    queryset = CarModel.objects.all()
-    http_method_names = ('put',)# Дозволяємо виконувати тільки метод put
-
-    def perform_update(self, serializer):
-        car = self.get_object()
-        car.photo.delete()
-        super().perform_update(serializer)
+# class CarAddPhotoView(UpdateAPIView):
+#     """Add car photo"""
+#     permission_classes = (AllowAny,)
+#     serializer_class = CarPhotoSerializer
+#     queryset = CarModel.objects.all()
+#     http_method_names = ('put',)# Дозволяємо виконувати тільки метод put
+#
+#     def perform_update(self, serializer):
+#         car = self.get_object()
+#         car.photo.delete()
+#         super().perform_update(serializer)
 
 
 # class TestEmailView(GenericAPIView):

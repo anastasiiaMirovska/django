@@ -17,7 +17,7 @@ class RegexEnum(Enum):
         ]
     )
     BRAND = (
-        r'^[A-Z](?=.*[A-Z])?(?=.*[a-z])?(\S){3,20}$',
+        r'^[A-Z](?=.*[A-Z])?(?=.*[a-z])?(\S){2,20}$',
         [
             'Brand name must start with capital letter',
             'Brand name must contain min 3 max 20 characters without spaces'
