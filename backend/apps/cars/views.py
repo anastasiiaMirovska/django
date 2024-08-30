@@ -10,7 +10,7 @@ from rest_framework.generics import (
     UpdateAPIView,
 )
 from rest_framework.pagination import PageNumberPagination
-from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAdminUser, IsAuthenticated, IsAuthenticatedOrReadOnly
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -32,7 +32,7 @@ class CarListView(ListCreateAPIView):
     serializer_class = CarSerializer
     queryset = CarModel.objects.all()
     filterset_class = CarFilter
-    permission_classes = (AllowAny,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
     pagination_class = None
     # permission_classes = (IsSuperUser,)# Оскільки ми поставили дефолтний permission у rest_conf, то нам вже не потрібно нічого тут прописувати
 
